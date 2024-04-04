@@ -1,4 +1,0 @@
-function readAllProducts(id) {
-
-    
-}

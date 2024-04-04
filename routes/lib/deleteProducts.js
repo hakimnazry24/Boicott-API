@@ -1,4 +1,4 @@
-const app = require("../app");
+const app = require("./../../routes/app");
 
 app.get("/", (req, res) => {
     console.log("hello world");
