@@ -5,4 +5,4 @@ const app = require("./routes/app");
 const PORT = 8080;
 
 
-app.listen(process.env.PORT, () => console.log(`SERVER STARTED AT PORT ${PORT}...`));
+app.listen(process.env.PORT || 8080, () => console.log(`SERVER STARTED AT PORT ${PORT}...`));
