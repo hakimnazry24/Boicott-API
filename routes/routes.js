@@ -3,6 +3,14 @@ const sqlite3 = require("sqlite3");
 const db = require("../db");
 const express = require("express");
 
+app.get("/", (req, res) => {
+    if(err) {
+        res.status(500).send({error: `Error cannot get to /`});
+        return;
+    }
+    res.status(200).sendFile("index.html");
+});
+
 app.get("/retailers", (req, res) => {
   const sql = "SELECT * FROM Retailer";
   db.all(sql, (err, rows) => {
@@ -75,6 +83,18 @@ app.get("/company/:id", (req, res) => {
   });
 });
 
+app.get("/neutral-products", (req, res) => {
+  const sql =
+    "SELECT Product.* FROM Product JOIN Company ON Product.company_id = Company.id WHERE Company.status = 0";
+  db.all(sql, [], (err, rows) => {
+    if (err) {
+      res.status(500).send({ error: `Cannot read neutral products. ${err}` });
+      return;
+    }
+    res.status(200).send(rows);
+  });
+});
+
 app.get("/support-products", (req, res) => {
   const sql =
     "SELECT Product.* FROM Product JOIN Company ON Product.company_id = Company.id WHERE Company.status = 1";
@@ -99,17 +119,6 @@ app.get("/boycott-products", (req, res) => {
   });
 });
 
-app.get("/neutral-products", (req, res) => {
-  const sql =
-    "SELECT Product.* FROM Product JOIN Company ON Product.company_id = Company.id WHERE Company.status = 0";
-  db.all(sql, [], (err, rows) => {
-    if (err) {
-      res.status(500).send({ error: `Cannot read neutral products. ${err}` });
-      return;
-    }
-    res.status(200).send(rows);
-  });
-});
 
 app.get("/neutral-companies", (req, res) => {
   const sql = "SELECT * FROM Company WHERE status = 0";
@@ -143,6 +152,8 @@ app.get("/boycott-companies", (req, res) => {
     res.status(200).send(rows);
   });
 });
+
+app.get
 
 
 app.post("/retailer", (req, res) => {
