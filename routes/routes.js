@@ -23,8 +23,8 @@ app.get("/retailers", (req, res) => {
 });
 
 app.get("/products", (req, res) => {
-  const sql = "SELECT * FROM Product";
-  db.all(sql, (err, rows) => {
+  const sql = "SELECT Product.*, Company.status FROM Product JOIN Company ON Product.company_id = Company.id";
+  db.all(sql,[], (err, rows) => {
     if (err) {
       res.status(500).send({ error: "Cannot read products" });
       return;
