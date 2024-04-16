@@ -33,6 +33,19 @@ app.get("/products", (req, res) => {
   });
 });
 
+app.get("/retailer/:retailer_id/products", (req, res) => {
+  const params = req.params.retailer_id;
+  const sql = "SELECT Product.* FROM Product JOIN Retailer ON Product.retailer_id = ?";
+  db.all(sql, [params], (err, rows) => {
+    if (err) {
+      res.status(500).send({error: `Cannot read retailer with id ${params} products`});
+      return;
+    }
+    res.status(200).send(rows);
+  });
+
+});
+
 app.get("/companies", (req, res) => {
   const sql = "SELECT * FROM Company";
   db.all(sql, (err, rows) => {
