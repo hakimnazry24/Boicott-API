@@ -1,7 +1,7 @@
 const path = require("path");
 const express = require("express");
 const app = require("./routes/app");
-const PORT = 8080;
+const PORT = 3000;
 
 require("./middleware");
 require("./routes/routes");
